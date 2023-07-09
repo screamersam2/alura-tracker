@@ -16,7 +16,7 @@
 import { defineComponent, PropType} from 'vue'
 import CCronometro from './Cronometro.vue'
 import ITarefa from '@/interfaces/ITarefa';
-import CBox from '@/components/box.vue'
+import CBox from '@/components/Box.vue'
 
 export default defineComponent({
     name: 'CTarefa',

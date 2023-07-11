@@ -2,10 +2,11 @@
  <main class="columns is-gapless is-multiline" :class="{'modo-noturno': modoNoturno}">
   
   <div class="column is-one-quarter">
-    <CBarraLateral @aoModoNoturno="alterarTema"/>    
+    <CBarraLateral @aoModoNoturno="alterarTema"/>
   </div>
 
   <div class="column is-three-quarter conteudo">
+    <CNotification/>
     <RouterView></RouterView>
   </div>
  </main>
@@ -16,23 +17,27 @@
   import { defineComponent } from 'vue';
 
   import CBarraLateral from './components/BarraLateral.vue';
+  import CNotification from './components/Notification.vue';
   
   export default defineComponent({ 
     name: "App", 
     components: { 
       CBarraLateral,
+      CNotification
     },
     
     data() {
       return {
+        
         modoNoturno: false as boolean
       }
     },
     methods: {
+      
       alterarTema(modoTema: boolean) {
+        
         this.modoNoturno = modoTema
-      }
-    }
+      }}
     })
 </script>
 

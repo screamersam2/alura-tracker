@@ -18,28 +18,36 @@
    
 <script lang="ts">
 
-import { ADICIONA_PROJETO, ALTERA_PROJETO } from '@/store/mutations_enum';
+import { ADICIONA_PROJETO, ALTERA_PROJETO, NOTIFICAR } from '@/store/mutations_enum';
 import { useStore } from '../../store';
 import { defineComponent } from 'vue';
+import { TypeNotification } from '@/interfaces/INotification';
+import { notificationMixin } from '@/mixins/notificar'
 
 export default defineComponent({
     name: "CFormulario",
-    props: {
-        id: {
-            type: String
-        }
-    },    
+        
     setup() {
         const store = useStore()
         return {
             store,            
         }
     },
+
+    props: {
+        id: {
+            type: String
+        }
+    },
+
     data() {
         return {
             nomeDoProjeto: '',            
         }
     },
+
+    mixins: [notificationMixin],
+
     methods: {
         salvar() {
             if(this.id) {
@@ -54,9 +62,27 @@ export default defineComponent({
                 this.store.commit(ADICIONA_PROJETO, this.nomeDoProjeto)
             }
             this.nomeDoProjeto = ''
+            this.notificar(TypeNotification.SUCCESS, 'sucesso', 'novo projeto criado!')
+            /*
+            this.store.commit(NOTIFICAR, {
+                title: 'sucesso',
+                message: 'novo projeto criado!',
+                type: TypeNotification.SUCCESS
+            })
+            */
             this.$router.push('/projetos')
+        },
+        /*
+        notificar(type: TypeNotification, title: string, message: string) {
+            this.store.commit(NOTIFICAR, {
+                title: title,
+                message: message,
+                type: type
+            })
         }
+        */
     },
+
     mounted() {
         if(this.id) {
             const projeto = this.store.state.projetos.find(proj => proj.id === this.id)

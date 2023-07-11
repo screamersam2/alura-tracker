@@ -23,14 +23,17 @@ import { useStore } from '../../store';
 import { defineComponent } from 'vue';
 import { TypeNotification } from '@/interfaces/INotification';
 import { notificationMixin } from '@/mixins/notificar'
+import useNotificator from '@/hooks/notificador'
 
 export default defineComponent({
     name: "CFormulario",
         
     setup() {
         const store = useStore()
+        const { notify } = useNotificator()
         return {
-            store,            
+            store,
+            notify            
         }
     },
 
@@ -46,7 +49,7 @@ export default defineComponent({
         }
     },
 
-    mixins: [notificationMixin],
+    //mixins: [notificationMixin],
 
     methods: {
         salvar() {
@@ -62,7 +65,8 @@ export default defineComponent({
                 this.store.commit(ADICIONA_PROJETO, this.nomeDoProjeto)
             }
             this.nomeDoProjeto = ''
-            this.notificar(TypeNotification.SUCCESS, 'sucesso', 'novo projeto criado!')
+            //this.notificar(TypeNotification.SUCCESS, 'sucesso', 'novo projeto criado!')
+            this.notify(TypeNotification.SUCCESS, 'sucesso', 'novo projeto criado!')
             /*
             this.store.commit(NOTIFICAR, {
                 title: 'sucesso',
